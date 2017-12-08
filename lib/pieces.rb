@@ -8,7 +8,7 @@ module Pieces
       @x = x
       @y = y
       @color = color
-      @piece = self.class.name[8..-1].downcase
+      @piece = "#{color} #{self.class.name[8..-1].downcase}"
       @spaces = board
     end
 
