@@ -13,14 +13,14 @@ class Chess
   def play
     loop do
       @board.draw
-      x1, y1 = prompt("Piece to move:")
-      x2, y2 = prompt("Target location:")
+      x1, y1 = prompt("\n Move piece at ")
+      x2, y2 = prompt("            to ")
       result = @board.move(x1, y1, x2, y2, @player)
       unless result.is_a?(Array)
-        puts Rainbow("\n\n  #{result}. Please try again.").red
+        puts Rainbow("\n\n #{result}. Please try again.\n").red
         next
       end
-      puts Rainbow("\n\n  #{result[1]}").green
+      puts Rainbow("\n #{result[1]}\n").green
       @player = @player == :white ? :black : :white
     end
   end
@@ -35,7 +35,7 @@ class Chess
 
   def prompt(text)
     input = nil
-    puts text
+    print text
     loop do
       input = gets.chomp.downcase
       break if validate(input)
