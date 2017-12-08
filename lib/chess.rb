@@ -16,10 +16,11 @@ class Chess
       x1, y1 = prompt("Piece to move:")
       x2, y2 = prompt("Target location:")
       result = @board.move(x1, y1, x2, y2, @player)
-      unless result == true
-        puts Rainbow("\n\n#{result}. Please try again.").red
+      unless result.is_a?(Array)
+        puts Rainbow("\n\n  #{result}. Please try again.").red
         next
       end
+      puts Rainbow("\n\n  #{result[1]}").green
       @player = @player == :white ? :black : :white
     end
   end
