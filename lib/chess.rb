@@ -1,9 +1,18 @@
-require "board"
+require_relative "board"
 
 # Manages user input and game-flow
-class Game
+class Chess
   def initialize
     @board = Board.new
+  end
+
+  def play
+    loop do
+      @board.draw
+      x1, y1 = prompt("Piece to move:")
+      x2, y2 = prompt("Target location:")
+      @board.move(x1, y1, x2, y2)
+    end
   end
 
   def an_to_xy(an)
@@ -15,9 +24,10 @@ class Game
   end
 
   def prompt(text)
+    input = nil
     puts text
     loop do
-      input = gets.chomp.upcase
+      input = gets.chomp.downcase
       break if validate(input)
       puts "Please try again. #{text}"
     end
@@ -27,7 +37,8 @@ class Game
   def validate(input)
     # Bending the rules for two characters
     # rubocop:disable Metrics/LineLength
-    if ("A".."Z").cover?(input[0]) && (1..8).cover?(input[1].to_i) && input.length == 2
+    input.downcase!
+    if ("a".."z").cover?(input[0]) && (1..8).cover?(input[1].to_i) && input.length == 2
       true
     else
       false
