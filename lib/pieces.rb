@@ -32,7 +32,7 @@ module Pieces
       end
     end
 
-    def space_takeable?(x, y)
+    def takeable?(x, y)
       if @board.space(x, y).nil?
         true
       elsif @board.space(x, y).color == @color
@@ -43,7 +43,7 @@ module Pieces
     end
 
     def move(x, y)
-      if on_board?(x, y) && in_moveset?(x, y) && space_takeable?(x, y)
+      if on_board?(x, y) && in_moveset?(x, y) && takeable?(x, y)
         @x = x
         @y = y
         return true

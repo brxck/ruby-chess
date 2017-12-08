@@ -54,9 +54,9 @@ class Board
   def create_board
     @spaces = []
     @spaces << new_rank(0)
-    @spaces << Array.new(8) { |x| Pawn.new(x, 1, :black, @spaces) }
+    @spaces << Array.new(8) { |x| Pawn.new(x, 1, :black, self) }
     4.times { @spaces << Array.new(8, nil) }
-    @spaces << Array.new(8) { |x| Pawn.new(x, 6, :white, @spaces) }
+    @spaces << Array.new(8) { |x| Pawn.new(x, 6, :white, self) }
     @spaces << new_rank(7)
   end
 
