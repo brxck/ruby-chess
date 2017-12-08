@@ -1,8 +1,17 @@
 require "board"
 
+# Manages user input and game-flow
 class Game
   def initialize
     @board = Board.new
+  end
+
+  def an_to_xy(an)
+    to_x = { a: 0, b: 1, c: 2, d: 3, e: 4, f: 5, g: 6, h: 7 }
+    to_y = { 1 => 7, 2 => 6, 3 => 5, 4 => 4, 5 => 3, 6 => 2, 7 => 1, 8 => 0 }
+
+    x, y = an.split("")
+    [to_x[x.to_sym], to_y[y.to_i]]
   end
 
   def prompt(text)
