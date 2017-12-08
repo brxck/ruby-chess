@@ -50,8 +50,7 @@ class Board
     print "\n\n"
     each do |item, x, y|
       padding if x.zero?
-      print_piece(item) unless item.nil?
-      print_empty if item.nil?
+      print_space(item)
       flip_color
       if x == 7
         print "  #{y}"
@@ -81,15 +80,13 @@ class Board
     print "\n"
   end
 
-  def print_empty
-    space = "      "
-    print Rainbow(space).bg(@bg_color)
-  end
-
-  def print_piece(item)
-    occupied = "  #{item.symbol}   "
-    color = item.color == :white ? :snow : :black
-    print Rainbow(occupied).color(color).bg(@bg_color)
+  def print_space(item)
+    if item
+      color = item.color == :white ? :snow : :black
+      print Rainbow("  #{item.symbol}   ").color(color).bg(@bg_color)
+    else
+      print Rainbow("      ").bg(@bg_color)
+    end
   end
 end
 
