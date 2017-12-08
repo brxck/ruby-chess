@@ -23,7 +23,7 @@ class Board
 
   def space(x, y)
     return nil if @spaces[y].nil?
-    return @spaces[y][x]
+    @spaces[y][x]
   end
 
   def set_space(x, y, value)
