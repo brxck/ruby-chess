@@ -3,7 +3,7 @@ require_relative "pieces"
 require_relative "draw"
 
 # Game board class.
-# @spaces is indexed like @spaces[y][x] !!!
+# @spaces is indexed like @spaces[y][x], use Board#space(x, y) instead.
 class Board
   include Pieces
   include Draw
