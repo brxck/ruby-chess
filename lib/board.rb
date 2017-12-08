@@ -18,11 +18,12 @@ class Board
     piece = space(x1, y1)
     return false unless piece.move(x2, y2)
     set_space(x2, y2, piece)
+    set_space(x1, y1, nil)
   end
 
   def space(x, y)
     return nil if @spaces[y].nil?
-    @spaces[y][x]
+    return @spaces[y][x]
   end
 
   def set_space(x, y, value)

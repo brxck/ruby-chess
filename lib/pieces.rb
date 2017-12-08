@@ -2,7 +2,7 @@ module Pieces
   # Generic chess piece class
   class Piece
     attr_accessor :position
-    attr_reader :piece, :symbol, :color
+    attr_reader :piece, :symbol, :color, :move_set
 
     def initialize(x, y, color, board)
       @x = x
@@ -19,7 +19,7 @@ module Pieces
     end
 
     def in_moveset?(x, y)
-      @move_set.include?([x - @x, y - @y]) ? true : false
+      @move_set.include?([x - @x, y - @y])
     end
 
     def path_clear?(x, y)
@@ -63,16 +63,16 @@ module Pieces
       @first_move = true
       @symbol = "♟"
       if y == 1
-        @move_set = [[0, -1], [0, -2]]
-        @attack_set = [[1, -1], [-1, -1]]
-      elsif y == 6
         @move_set = [[0, 1], [0, 2]]
         @attack_set = [[1, 1], [-1, 1]]
+      elsif y == 6
+        @move_set = [[0, -1], [0, -2]]
+        @attack_set = [[1, -1], [-1, -1]]
       end
     end
 
     def move(x, y)
-      super
+      return false unless super
       @move_set.pop if @first_move == true
       @first_move = false
       true
