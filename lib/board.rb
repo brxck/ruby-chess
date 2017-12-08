@@ -43,15 +43,18 @@ class Board
     end
   end
 
+  # TODO: refactor
   def draw
     @bg_color = :khaki
-
+    ("a".."h").each { |letter| print "  #{letter}   " }
+    print "\n\n"
     each do |item, x, y|
       padding if x.zero?
       print_piece(item) unless item.nil?
       print_empty if item.nil?
       flip_color
       if x == 7
+        print "  #{y}"
         print "\n"
         padding
         flip_color
@@ -89,3 +92,6 @@ class Board
     print Rainbow(occupied).color(color).bg(@bg_color)
   end
 end
+
+board = Board.new
+board.draw
