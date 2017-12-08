@@ -21,7 +21,7 @@ class Game
       break if validate(input)
       puts "Please try again. #{text}"
     end
-    input.split("")
+    an_to_xy(input)
   end
 
   def validate(input)
