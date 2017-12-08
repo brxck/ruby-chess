@@ -8,16 +8,7 @@ class Board
   def initialize
     create_board
   end
-
-  def create_board
-    @spaces = []
-    @spaces << new_rank(0)
-    @spaces << Array.new { |x| Pawn.new(x, 0, :black) }
-    4.times { @spaces << Array.new(8, nil)}
-    @spaces << Array.new { |x| Pawn.new(x, 6, :black) }
-    @spaces << new_rank(7)
-  end
-
+  
   def new_rank(y)
     color = y.zero? ? :black : :white
     [Rook.new(0, y, color),
@@ -30,6 +21,15 @@ class Board
      Rook.new(7, y, color)]
   end
 
+  def create_board
+    @spaces = []
+    @spaces << new_rank(0)
+    @spaces << Array.new { |x| Pawn.new(x, 0, :black) }
+    4.times { @spaces << Array.new(8, nil)}
+    @spaces << Array.new { |x| Pawn.new(x, 6, :black) }
+    @spaces << new_rank(7)
+  end
+
   def each
     x = 0
     y = 0
@@ -39,6 +39,13 @@ class Board
         x += 1
       end
       y += 1
+    end
+  end
+
+  def draw
+    each do |item, x, y|
+      print item.symbol unless item.nil?
+      print "/n" if x == 7
     end
   end
 end

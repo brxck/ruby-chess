@@ -1,7 +1,8 @@
 module Pieces
   # Generic chess piece class
   class Piece
-    attr_accessor :position, :color
+    attr_accessor :position
+    attr_reader :piece, :color
 
     def initialize(x, y, color)
       @x = x
@@ -43,6 +44,11 @@ module Pieces
   # rubocop:disable Style/Documentation
 
   class Pawn < Piece
+    def symbol
+      "♙" if @color == :white
+      "♟" if @color == :black
+    end
+
     # TODO: boardside check for attacked piece
     def initialize(x, y, color, start)
       super(x, y, color)
@@ -55,6 +61,11 @@ module Pieces
   end
 
   class Rook < Piece
+    def symbol
+      "♖" if @color == :white
+      "♜" if @color == :black
+    end
+
     def in_moveset?(x, y)
       if (x == @x && y != @y) || (x != @x && y == @y)
         return true if path_clear?(x, y)
@@ -65,6 +76,11 @@ module Pieces
   end
 
   class Bishop < Piece
+    def symbol
+      "♗" if @color == :white
+      "♝" if @color == :black
+    end
+
     def in_moveset?(x, y)
       if x - @x == y - @y
         return true if path_clear?(x, y)
@@ -75,16 +91,31 @@ module Pieces
   end
 
   class Knight < Piece
+    def symbol
+      "♘" if @color == :white
+      "♞" if @color == :black
+    end
+
     @move_set = [[2, 1], [2, -1], [-2, 1], [-2, -1],
                  [1, 2], [-1, 2], [1, -2], [-1, -2]]
   end
 
   class King < Piece
+    def symbol
+      "♔" if @color == :white
+      "♚" if @color == :black
+    end
+
     @move_set = [[1, 0], [-1, 0], [0, 1], [0, -1],
                  [1, 1], [1, -1], [-1, 1], [-1, -1]]
   end
 
   class Queen < Piece
+    def symbol
+      "♕" if @color == :white
+      "♛" if @color == :black
+    end
+
     # This just checks if we are moving in a straight line & if path is clear.
     # rubocop:disable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
     def in_moveset?(x, y)
