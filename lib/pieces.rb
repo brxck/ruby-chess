@@ -23,4 +23,13 @@ module Pieces
     end
   end
 
+  # Knight chess piece
+  class Knight < Piece
+    @move_set = [[2, 1], [2, -1], [-2, 1], [-2, -1],
+                 [1, 2], [-1, 2], [1, -2], [-1, -2]]
+
+    def in_moveset?(x, y)
+      @move_set.include?([x - @x, y - @y]) ? true : false
+    end
+  end
 end
