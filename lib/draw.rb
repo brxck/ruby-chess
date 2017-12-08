@@ -1,5 +1,7 @@
 # Draws the board to the terminal
 module Draw
+  require "rainbow"
+
   def draw
     @bg_color = :dimgray
     print_letters

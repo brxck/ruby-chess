@@ -1,4 +1,3 @@
-require "rainbow"
 require_relative "pieces"
 require_relative "draw"
 
