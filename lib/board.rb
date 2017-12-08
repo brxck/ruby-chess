@@ -13,8 +13,9 @@ class Board
     create_board
   end
 
-  def move(x1, y1, x2, y2)
+  def move(x1, y1, x2, y2, player)
     piece = space(x1, y1)
+    return false unless piece.color == player
     return false unless piece.move(x2, y2)
     set_space(x2, y2, piece)
     set_space(x1, y1, nil)

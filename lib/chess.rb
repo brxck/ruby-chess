@@ -2,8 +2,11 @@ require_relative "board"
 
 # Manages user input and game-flow
 class Chess
+  attr_accessor :player
+
   def initialize
     @board = Board.new
+    @player = :white
   end
 
   def play
@@ -11,7 +14,11 @@ class Chess
       @board.draw
       x1, y1 = prompt("Piece to move:")
       x2, y2 = prompt("Target location:")
-      @board.move(x1, y1, x2, y2)
+      unless @board.move(x1, y1, x2, y2, @player)
+        puts "Invalid move. Please try again."
+        next
+      end
+      @player = @player == :white ? :black : :white
     end
   end
 
@@ -35,8 +42,6 @@ class Chess
   end
 
   def validate(input)
-    # Bending the rules for two characters
-    # rubocop:disable Metrics/LineLength
     input.downcase!
     if ("a".."z").cover?(input[0]) && (1..8).cover?(input[1].to_i) && input.length == 2
       true
