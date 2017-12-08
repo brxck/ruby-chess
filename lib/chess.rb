@@ -1,4 +1,5 @@
 require_relative "board"
+require "rainbow"
 
 # Manages user input and game-flow
 class Chess
@@ -14,8 +15,9 @@ class Chess
       @board.draw
       x1, y1 = prompt("Piece to move:")
       x2, y2 = prompt("Target location:")
-      unless @board.move(x1, y1, x2, y2, @player)
-        puts "Invalid move. Please try again."
+      result = @board.move(x1, y1, x2, y2, @player)
+      unless result == true
+        puts Rainbow("\n\n#{result}. Please try again.").red
         next
       end
       @player = @player == :white ? :black : :white

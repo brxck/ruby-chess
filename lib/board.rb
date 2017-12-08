@@ -15,10 +15,12 @@ class Board
 
   def move(x1, y1, x2, y2, player)
     piece = space(x1, y1)
-    return false unless piece.color == player
-    return false unless piece.move(x2, y2)
+    return "There is no piece to move there" if piece.nil?
+    return "You must move a #{player} piece" if piece.color != player
+    return "Invalid move" unless piece.move(x2, y2)
     set_space(x2, y2, piece)
     set_space(x1, y1, nil)
+    true
   end
 
   def space(x, y)
