@@ -41,6 +41,18 @@ module Pieces
     end
   end
 
+  class Rook < Piece
+    def in_moveset?(x, y)
+      if x == @x && y != @y
+        true
+      elsif x != @x && y == @y
+        true
+      else
+        false
+      end
+    end
+  end
+
   class Knight < Piece
     @move_set = [[2, 1], [2, -1], [-2, 1], [-2, -1],
                  [1, 2], [-1, 2], [1, -2], [-1, -2]]
