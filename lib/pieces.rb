@@ -53,6 +53,13 @@ module Pieces
     end
   end
 
+  class Bishop < Piece
+    def in_moveset?(x, y)
+      return true if x - @x == y - @y
+      false
+    end
+  end
+
   class Knight < Piece
     @move_set = [[2, 1], [2, -1], [-2, 1], [-2, -1],
                  [1, 2], [-1, 2], [1, -2], [-1, -2]]
