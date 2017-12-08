@@ -46,17 +46,20 @@ class Board
   # TODO: refactor
   def draw
     @bg_color = :khaki
-    ("a".."h").each { |letter| print " #{letter}  " }
+    print_letters
     print "\n"
     each do |item, x, y|
+      print_number(y) if x.zero?
       print_space(item)
       flip_color
       if x == 7
-        print " #{8 - y}"
+        print_number(y)
         print "\n"
         flip_color
       end
     end
+    print_letters
+    print "\n"
   end
 
   private
@@ -67,6 +70,15 @@ class Board
     elsif @bg_color == :sienna
       @bg_color = :khaki
     end
+  end
+
+  def print_letters
+    print "   "
+    ("a".."h").each { |letter| print " #{letter}  " }
+  end
+
+  def print_number(y)
+    print " #{8 - y} "
   end
 
   def print_space(item)
