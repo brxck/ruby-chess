@@ -64,8 +64,11 @@ module Pieces
 
   class Bishop < Piece
     def in_moveset?(x, y)
-      return true if x - @x == y - @y
-      false
+      if x - @x == y - @y
+        return true if path_clear?(x, y)
+      else
+        false
+      end
     end
   end
 
