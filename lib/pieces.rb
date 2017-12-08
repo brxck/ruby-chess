@@ -50,11 +50,11 @@ module Pieces
     end
 
     # TODO: boardside check for attacked piece
-    def initialize(x, y, color, start)
+    def initialize(x, y, color)
       super(x, y, color)
-      if start == :top
+      if y == 1
         @move_set = [[1, -1], [0, -1], [-1, -1]]
-      elsif start == :bottom
+      elsif y == 6
         @move_set = [[1, 1], [0, 1], [-1, 1]]
       end
     end
