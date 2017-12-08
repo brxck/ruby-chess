@@ -1,7 +1,7 @@
 require "pieces"
 
 describe Pieces do
-  let(:pawn) { Pieces::Pawn.new(0, 0, :white, :bottom) }
+  let(:pawn) { Pieces::Pawn.new(0, 0, :white) }
 
   describe "#symbol" do
     context "when asked for white pawn" do

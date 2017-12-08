@@ -46,16 +46,14 @@ class Board
   # TODO: refactor
   def draw
     @bg_color = :khaki
-    ("a".."h").each { |letter| print "  #{letter}   " }
-    print "\n\n"
+    ("a".."h").each { |letter| print " #{letter}  " }
+    print "\n"
     each do |item, x, y|
-      padding if x.zero?
       print_space(item)
       flip_color
       if x == 7
-        print "  #{y}"
+        print " #{y}"
         print "\n"
-        padding
         flip_color
       end
     end
@@ -71,21 +69,12 @@ class Board
     end
   end
 
-  def padding
-    space = "      "
-    8.times do
-      print Rainbow(space).bg(@bg_color)
-      @bg_color = flip_color
-    end
-    print "\n"
-  end
-
   def print_space(item)
     if item
       color = item.color == :white ? :snow : :black
-      print Rainbow("  #{item.symbol}   ").color(color).bg(@bg_color)
+      print Rainbow(" #{item.symbol}  ").color(color).bg(@bg_color)
     else
-      print Rainbow("      ").bg(@bg_color)
+      print Rainbow("    ").bg(@bg_color)
     end
   end
 end
