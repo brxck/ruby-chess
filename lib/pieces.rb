@@ -23,13 +23,14 @@ module Pieces
     end
 
     def path_clear?(x, y)
-      dx = @x
-      dy = @y
+      dx = @x + (x <=> @x)
+      dy = @y + (y <=> @y)
       until [dx, dy] == [x, y]
         return false if @board.space(dx, dy)
-        dx += dx <=> @x
-        dy += dy <=> @y
+        dx += x <=> dx
+        dy += y <=> dy
       end
+      true
     end
 
     def takeable?(x, y)
@@ -50,6 +51,10 @@ module Pieces
       else
         false
       end
+    end
+
+    def inspect
+      @piece
     end
   end
 
@@ -119,7 +124,7 @@ module Pieces
     end
 
     def in_moveset?(x, y)
-      if x - @x == y - @y
+      if (x - @x).abs == (y - @y).abs
         return true if path_clear?(x, y)
       else
         false
