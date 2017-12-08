@@ -1,8 +1,8 @@
 module Pieces
   # Generic chess piece class
   class Piece
-    attr_accessor :position
-    attr_reader :piece, :color
+    attr_accessor :position, :color
+    attr_reader :piece
 
     def initialize(x, y, color)
       @x = x
@@ -45,8 +45,8 @@ module Pieces
 
   class Pawn < Piece
     def symbol
-      "♙" if @color == :white
-      "♟" if @color == :black
+      return "♙" if @color == :white
+      return "♟" if @color == :black
     end
 
     # TODO: boardside check for attacked piece
@@ -62,8 +62,8 @@ module Pieces
 
   class Rook < Piece
     def symbol
-      "♖" if @color == :white
-      "♜" if @color == :black
+      return "♖" if @color == :white
+      return "♜" if @color == :black
     end
 
     def in_moveset?(x, y)
@@ -77,8 +77,8 @@ module Pieces
 
   class Bishop < Piece
     def symbol
-      "♗" if @color == :white
-      "♝" if @color == :black
+      return "♗" if @color == :white
+      return "♝" if @color == :black
     end
 
     def in_moveset?(x, y)
@@ -92,8 +92,8 @@ module Pieces
 
   class Knight < Piece
     def symbol
-      "♘" if @color == :white
-      "♞" if @color == :black
+      return "♘" if @color == :white
+      return "♞" if @color == :black
     end
 
     def initialize(x, y, color)
@@ -105,8 +105,8 @@ module Pieces
 
   class King < Piece
     def symbol
-      "♔" if @color == :white
-      "♚" if @color == :black
+      return "♔" if @color == :white
+      return "♚" if @color == :black
     end
 
     def initialize(x, y, color)
@@ -118,8 +118,8 @@ module Pieces
 
   class Queen < Piece
     def symbol
-      "♕" if @color == :white
-      "♛" if @color == :black
+      return "♕" if @color == :white
+      return "♛" if @color == :black
     end
 
     # This just checks if we are moving in a straight line & if path is clear.
