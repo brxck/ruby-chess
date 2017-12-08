@@ -8,6 +8,7 @@ module Pieces
       @x = x
       @y = y
       @color = color
+      @piece = self.class.name[8..-1].downcase
     end
 
     def on_board?(x, y)
