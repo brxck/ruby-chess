@@ -7,7 +7,7 @@ class Board
   include Pieces
   include Draw
 
-  attr_accessor :spaces, :bg_color
+  attr_accessor :spaces
 
   def initialize
     create_board
