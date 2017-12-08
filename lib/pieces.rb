@@ -23,7 +23,20 @@ module Pieces
     end
   end
 
-  # Knight chess piece
+  # Self documenting code ftw.
+  # rubocop:disable Style/Documentation
+
+  class Pawn < Piece
+    # TODO: boardside check for attacked piece
+    def initialize(start)
+      if start == :top
+        @move_set = [[1, -1], [0, -1], [-1, -1]]
+      elsif start == :bottom
+        @move_set = [[1, 1], [0, 1], [-1, 1]]
+      end
+    end
+  end
+
   class Knight < Piece
     @move_set = [[2, 1], [2, -1], [-2, 1], [-2, -1],
                  [1, 2], [-1, 2], [1, -2], [-1, -2]]
