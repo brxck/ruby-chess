@@ -15,13 +15,19 @@ class Board
   end
 
   def move(x1, y1, x2, y2)
-    piece = @spaces[y1][x1]
+    piece = space(x1, y1)
     return false unless piece.move(x2, y2)
-    @spaces[y2][x2] = piece
+    set_space(x2, y2, piece)
   end
 
   def space(x, y)
+    return nil if @spaces[y].nil?
     @spaces[y][x]
+  end
+
+  def set_space(x, y, value)
+    return nil if @spaces[y].nil?
+    @spaces[y][x] = value
   end
 
   def an_to_xy(an)
@@ -34,14 +40,14 @@ class Board
 
   def new_rank(y)
     color = y.zero? ? :black : :white
-    [Rook.new(0, y, color, @spaces),
-     Knight.new(1, y, color, @spaces),
-     Bishop.new(2, y, color, @spaces),
-     King.new(3, y, color, @spaces),
-     Queen.new(4, y, color, @spaces),
-     Bishop.new(5, y, color, @spaces),
-     Knight.new(6, y, color, @spaces),
-     Rook.new(7, y, color, @spaces)]
+    [Rook.new(0, y, color, self),
+     Knight.new(1, y, color, self),
+     Bishop.new(2, y, color, self),
+     King.new(3, y, color, self),
+     Queen.new(4, y, color, self),
+     Bishop.new(5, y, color, self),
+     Knight.new(6, y, color, self),
+     Rook.new(7, y, color, self)]
   end
 
   def create_board

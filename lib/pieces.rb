@@ -9,7 +9,7 @@ module Pieces
       @y = y
       @color = color
       @piece = "#{color} #{self.class.name[8..-1].downcase}"
-      @spaces = board
+      @board = board
     end
 
     def on_board?(x, y)
@@ -26,16 +26,16 @@ module Pieces
       dx = @x
       dy = @y
       until [dx, dy] == [x, y]
-        return false if @spaces[dy][dx]
+        return false if @board.space(dx, dy)
         dx += dx <=> @x
         dy += dy <=> @y
       end
     end
 
     def space_takeable?(x, y)
-      if @spaces[y][x].nil?
+      if @board.space(x, y).nil?
         true
-      elsif @spaces[y][x].color == @color
+      elsif @board.space(x, y).color == @color
         false
       else
         true
