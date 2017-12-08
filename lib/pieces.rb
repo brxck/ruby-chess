@@ -28,11 +28,15 @@ module Pieces
         dx += dx <=> @x
         dy += dy <=> @y
       end
+    end
+
+    def space_takeable?(x, y)
+      return false if @space[x][y].color == @color
       true
     end
 
     def move(x, y)
-      if on_board?(x, y) && in_moveset?(x, y)
+      if on_board?(x, y) && in_moveset?(x, y) && space_takeable?(x, y)
         @x = x
         @y = y
         return true
