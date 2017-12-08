@@ -50,14 +50,25 @@ module Pieces
 
   class Pawn < Piece
     # TODO: boardside check for attacked piece
+    # TODO
     def initialize(x, y, color)
       super
+      @first_move = true
       @symbol = "♟"
       if y == 1
-        @move_set = [[1, -1], [0, -1], [-1, -1]]
+        @move_set = [[0, -1], [0, -2]]
+        @attack_set = [[1, -1], [-1, -1]]
       elsif y == 6
-        @move_set = [[1, 1], [0, 1], [-1, 1]]
+        @move_set = [[0, 1], [0, 2]]
+        @attack_set = [[1, 1], [-1, 1]]
       end
+    end
+
+    def move(x, y)
+      super
+      @move_set.pop if @first_move == true
+      @first_move = false
+      true
     end
   end
 
