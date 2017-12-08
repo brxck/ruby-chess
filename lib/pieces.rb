@@ -46,9 +46,10 @@ module Pieces
       if on_board?(x, y) && in_moveset?(x, y) && takeable?(x, y)
         @x = x
         @y = y
-        return true
+        true
+      else
+        false
       end
-      false
     end
   end
 
@@ -75,19 +76,24 @@ module Pieces
       @attack_set.include?([x - @x, y - @y])
     end
 
-    # TODO: urgent need of refactoring
+    def first_move
+      return nil unless @first_move == true
+      move_set.pop
+      @first_move = false
+    end
+
     def move(x, y)
-      if (in_attackset?(x, y) && on_board?(x, y) && %i[white black].include?(takeable?(x, y))) || (in_moveset?(x, y) && on_board?(x, y) && takeable?(x, y) == true)
-        @x = x
-        @y = y
-        if @first_move == true
-          move_set.pop
-          @first_move = false
-        end
-        true
+      if in_attackset?(x, y)
+        return false unless on_board?(x, y) && %i[white black].include?(takeable?(x, y))
+      elsif in_moveset?(x, y)
+        return false unless on_board?(x, y) && takeable?(x, y) == true
       else
-        false
+        return false
       end
+      @x = x
+      @y = y
+      first_move
+      true
     end
   end
 
