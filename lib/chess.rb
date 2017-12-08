@@ -46,7 +46,7 @@ class Chess
 
   def validate(input)
     input.downcase!
-    if ("a".."z").cover?(input[0]) && (1..8).cover?(input[1].to_i) && input.length == 2
+    if ("a".."h").cover?(input[0]) && (1..8).cover?(input[1].to_i) && input.length == 2
       true
     else
       false
