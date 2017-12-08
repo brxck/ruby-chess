@@ -18,6 +18,17 @@ module Pieces
       @move_set.include?([x - @x, y - @y]) ? true : false
     end
 
+    def path_clear?(x, y)
+      dx = @x
+      dy = @y
+      until [dx, dy] == [x, y]
+        return false if @board.spaces[dx][dy]
+        dx += dx <=> @x
+        dy += dy <=> @y
+      end
+      true
+    end
+
     def move(x, y)
       if on_board?(x, y) && in_moveset?(x, y)
         @x = x
@@ -43,10 +54,8 @@ module Pieces
 
   class Rook < Piece
     def in_moveset?(x, y)
-      if x == @x && y != @y
-        true
-      elsif x != @x && y == @y
-        true
+      if (x == @x && y != @y) || (x != @x && y == @y)
+        return true if path_clear?(x, y)
       else
         false
       end
