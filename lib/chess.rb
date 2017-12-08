@@ -16,13 +16,34 @@ class Chess
       x1, y1 = prompt("\n Move piece at ")
       x2, y2 = prompt("            to ")
       result = @board.move(x1, y1, x2, y2, @player)
-      unless result.is_a?(Array)
-        puts Rainbow("\n\n #{result}. Please try again.\n").red
-        next
-      end
-      puts Rainbow("\n #{result[1]}\n").green
+      print_message(result, x2, y2)
+      next if result != true
       @player = @player == :white ? :black : :white
     end
+  end
+
+  # Just a case statement.
+  # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
+  def print_message(code, x2, y2)
+    text = case code
+           when :no_piece
+             Rainbow("There is no piece to move there. Try again.").red
+           when :wrong_piece
+             Rainbow("You must move a #{@player} piece. Try again.").red
+           when :invalid
+             Rainbow("You can't move there. Try again.").red
+           when true
+             Rainbow("#{@board.space(x2, y2).piece.capitalize} to " \
+                     "#{xy_to_an(x2, y2)}.").green
+           end
+    puts "\n\n " + text + "\n"
+  end
+
+  def xy_to_an(x, y)
+    to_file = { 0 => "a", 1 => "b", 2 => "c", 3 => "d", 4 => "e", 5 => "f", 6 => "g", 7 => "h" }
+    to_rank = { 7 => 1, 6 => 2, 5 => 3, 4 => 4, 3 => 5, 2 => 6, 1 => 7, 0 => 8 }
+
+    "#{to_file[x]}#{to_rank[y]}"
   end
 
   def an_to_xy(an)

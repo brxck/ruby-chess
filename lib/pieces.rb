@@ -53,6 +53,10 @@ module Pieces
       end
     end
 
+    def king_in_check?
+      @move_set.each { |x, y| return true if @board.space(x, y).is_a?(King) }
+    end
+
     def inspect
       @piece
     end
