@@ -2,6 +2,8 @@ require "rainbow"
 require_relative "pieces"
 require_relative "draw"
 
+# Game board class.
+# @spaces is indexed like @spaces[y][x] !!!
 class Board
   include Pieces
   include Draw
@@ -13,9 +15,9 @@ class Board
   end
 
   def move(x1, y1, x2, y2)
-    piece = @spaces[x1][y1]
-    return false unless piece.move[x2][y2]
-    @spaces[x2][y2] = piece
+    piece = @spaces[y1][x1]
+    return false unless piece.move(x2, y2)
+    @spaces[y2][x2] = piece
   end
 
   def an_to_xy(an)
@@ -28,22 +30,22 @@ class Board
 
   def new_rank(y)
     color = y.zero? ? :black : :white
-    [Rook.new(0, y, color, @board),
-     Knight.new(1, y, color, @board),
-     Bishop.new(2, y, color, @board),
-     King.new(3, y, color, @board),
-     Queen.new(4, y, color, @board),
-     Bishop.new(5, y, color, @board),
-     Knight.new(6, y, color, @board),
-     Rook.new(7, y, color, @board)]
+    [Rook.new(0, y, color, @spaces),
+     Knight.new(1, y, color, @spaces),
+     Bishop.new(2, y, color, @spaces),
+     King.new(3, y, color, @spaces),
+     Queen.new(4, y, color, @spaces),
+     Bishop.new(5, y, color, @spaces),
+     Knight.new(6, y, color, @spaces),
+     Rook.new(7, y, color, @spaces)]
   end
 
   def create_board
     @spaces = []
     @spaces << new_rank(0)
-    @spaces << Array.new(8) { |x| Pawn.new(x, 1, :black) }
+    @spaces << Array.new(8) { |x| Pawn.new(x, 1, :black, @spaces) }
     4.times { @spaces << Array.new(8, nil) }
-    @spaces << Array.new(8) { |x| Pawn.new(x, 6, :white) }
+    @spaces << Array.new(8) { |x| Pawn.new(x, 6, :white, @spaces) }
     @spaces << new_rank(7)
   end
 

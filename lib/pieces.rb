@@ -4,12 +4,12 @@ module Pieces
     attr_accessor :position
     attr_reader :piece, :symbol, :color
 
-    def initialize(x, y, color)
+    def initialize(x, y, color, board)
       @x = x
       @y = y
       @color = color
       @piece = self.class.name[8..-1].downcase
-      @board = board
+      @spaces = board
     end
 
     def on_board?(x, y)
@@ -26,15 +26,20 @@ module Pieces
       dx = @x
       dy = @y
       until [dx, dy] == [x, y]
-        return false if @board.spaces[dx][dy]
+        return false if @spaces[dy][dx]
         dx += dx <=> @x
         dy += dy <=> @y
       end
     end
 
     def space_takeable?(x, y)
-      return false if @space[x][y].color == @color
-      true
+      if @spaces[y][x].nil?
+        true
+      elsif @spaces[y][x].color == @color
+        false
+      else
+        true
+      end
     end
 
     def move(x, y)
@@ -53,7 +58,7 @@ module Pieces
   class Pawn < Piece
     # TODO: boardside check for attacked piece
     # TODO
-    def initialize(x, y, color)
+    def initialize(x, y, color, board)
       super
       @first_move = true
       @symbol = "♟"
@@ -75,7 +80,7 @@ module Pieces
   end
 
   class Rook < Piece
-    def initialize(x, y, color)
+    def initialize(x, y, color, board)
       super
       @symbol = "♜"
     end
@@ -90,7 +95,7 @@ module Pieces
   end
 
   class Bishop < Piece
-    def initialize(x, y, color)
+    def initialize(x, y, color, board)
       super
       @symbol = "♝"
     end
@@ -105,7 +110,7 @@ module Pieces
   end
 
   class Knight < Piece
-    def initialize(x, y, color)
+    def initialize(x, y, color, board)
       super
       @symbol = "♞"
       @move_set = [[2, 1], [2, -1], [-2, 1], [-2, -1],
@@ -114,7 +119,7 @@ module Pieces
   end
 
   class King < Piece
-    def initialize(x, y, color)
+    def initialize(x, y, color, board)
       super
       @symbol = "♚"
       @move_set = [[1, 0], [-1, 0], [0, 1], [0, -1],
@@ -123,7 +128,7 @@ module Pieces
   end
 
   class Queen < Piece
-    def initialize(x, y, color)
+    def initialize(x, y, color, board)
       super
       @symbol = "♛"
     end
