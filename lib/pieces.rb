@@ -38,7 +38,7 @@ module Pieces
       elsif @board.space(x, y).color == @color
         false
       else
-        true
+        @board.space(x, y).color
       end
     end
 
@@ -71,11 +71,23 @@ module Pieces
       end
     end
 
+    def in_attackset?(x, y)
+      @attack_set.include?([x - @x, y - @y])
+    end
+
+    # TODO: urgent need of refactoring
     def move(x, y)
-      return false unless super
-      @move_set.pop if @first_move == true
-      @first_move = false
-      true
+      if (in_attackset?(x, y) && on_board?(x, y) && %i[white black].include?(takeable?(x, y))) || (in_moveset?(x, y) && on_board?(x, y) && takeable?(x, y) == true)
+        @x = x
+        @y = y
+        if @first_move == true
+          move_set.pop
+          @first_move = false
+        end
+        true
+      else
+        false
+      end
     end
   end
 

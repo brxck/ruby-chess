@@ -36,8 +36,8 @@ describe Pieces::Pawn do
       expect(pawn.takeable?(0, 2)).to eq(true)
     end
 
-    it "returns true for opposite color pieces" do
-      expect(pawn.takeable?(0, 6)).to eq(true)
+    it "returns color for opposite color pieces" do
+      expect(pawn.takeable?(0, 6)).to eq(:white)
     end
 
     it "returns false for same-colored pieces" do
