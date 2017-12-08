@@ -1,11 +1,12 @@
 module Pieces
   # Generic chess piece class
   class Piece
-    attr_accessor :position
+    attr_accessor :position, :color
 
-    def initialize(x, y)
+    def initialize(x, y, color)
       @x = x
       @y = y
+      @color = color
     end
 
     def on_board?(x, y)
