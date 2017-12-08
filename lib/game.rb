@@ -16,7 +16,9 @@ class Game
   end
 
   def validate(input)
-    if ("A".."Z").cover?(input[0]) && (1..8).cover?(input[1])
+    # Bending the rules for two characters
+    # rubocop:disable Metrics/LineLength
+    if ("A".."Z").cover?(input[0]) && (1..8).cover?(input[1]) && input.length == 2
       true
     else
       false
