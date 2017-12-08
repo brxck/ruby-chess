@@ -35,6 +35,7 @@ module Pieces
       if on_board?(x, y) && in_moveset?(x, y)
         @x = x
         @y = y
+        return true
       end
       false
     end

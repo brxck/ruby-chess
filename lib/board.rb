@@ -12,6 +12,12 @@ class Board
     create_board
   end
 
+  def move(x1, y1, x2, y2)
+    piece = @spaces[x1][y1]
+    return false unless piece.move[x2][y2]
+    @spaces[x2][y2] = piece
+  end
+
   def an_to_xy(an)
     to_x = { a: 0, b: 1, c: 2, d: 3, e: 4, f: 5, g: 6, h: 7 }
     to_y = { 1 => 7, 2 => 6, 3 => 5, 4 => 4, 5 => 3, 6 => 2, 7 => 1, 8 => 0 }
