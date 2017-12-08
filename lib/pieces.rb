@@ -44,7 +44,8 @@ module Pieces
 
   class Pawn < Piece
     # TODO: boardside check for attacked piece
-    def initialize(start)
+    def initialize(x, y, color, start)
+      super(x, y, color)
       if start == :top
         @move_set = [[1, -1], [0, -1], [-1, -1]]
       elsif start == :bottom
