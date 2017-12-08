@@ -81,4 +81,16 @@ module Pieces
     @move_set = [[1, 0], [-1, 0], [0, 1], [0, -1],
                  [1, 1], [1, -1], [-1, 1], [-1, -1]]
   end
+
+  class Queen < Piece
+    # This just checks if we are moving in a straight line & if path is clear.
+    # rubocop:disable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
+    def in_moveset?(x, y)
+      if (x == @x && y != @y) || (x != @x && y == @y) || x - @x == y - @y
+        return true if path_clear?(x, y)
+      else
+        false
+      end
+    end
+  end
 end
