@@ -1,9 +1,10 @@
+require "rainbow"
 require_relative "pieces"
 
 class Board
   include Pieces
 
-  attr_accessor :spaces
+  attr_accessor :spaces, :bg_color
 
   def initialize
     create_board
@@ -43,9 +44,46 @@ class Board
   end
 
   def draw
+    @bg_color = :khaki
+
     each do |item, x, y|
-      print " #{item.symbol} " unless item.nil?
-      print "\n" if x == 7
+      padding if x.zero?
+      print_piece(item) unless item.nil?
+      print_empty if item.nil?
+      flip_color
+      if x == 7
+        print "\n"
+        padding
+        flip_color
+      end
     end
+  end
+
+  def flip_color
+    if @bg_color == :khaki
+      @bg_color = :sienna
+    elsif @bg_color == :sienna
+      @bg_color = :khaki
+    end
+  end
+
+  def padding
+    space = "      "
+    8.times do
+      print Rainbow(space).bg(@bg_color)
+      @bg_color = flip_color
+    end
+    print "\n"
+  end
+
+  def print_empty
+    space = "      "
+    print Rainbow(space).bg(@bg_color)
+  end
+
+  def print_piece(item)
+    occupied = "  #{item.symbol}   "
+    color = item.color == :white ? :snow : :black
+    print Rainbow(occupied).color(color).bg(@bg_color)
   end
 end

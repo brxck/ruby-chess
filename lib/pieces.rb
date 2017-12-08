@@ -1,8 +1,8 @@
 module Pieces
   # Generic chess piece class
   class Piece
-    attr_accessor :position, :color
-    attr_reader :piece
+    attr_accessor :position
+    attr_reader :piece, :symbol, :color
 
     def initialize(x, y, color)
       @x = x
@@ -44,14 +44,10 @@ module Pieces
   # rubocop:disable Style/Documentation
 
   class Pawn < Piece
-    def symbol
-      return "♙" if @color == :white
-      return "♟" if @color == :black
-    end
-
     # TODO: boardside check for attacked piece
     def initialize(x, y, color)
-      super(x, y, color)
+      super
+      @symbol = "♟"
       if y == 1
         @move_set = [[1, -1], [0, -1], [-1, -1]]
       elsif y == 6
@@ -61,9 +57,9 @@ module Pieces
   end
 
   class Rook < Piece
-    def symbol
-      return "♖" if @color == :white
-      return "♜" if @color == :black
+    def initialize(x, y, color)
+      super
+      @symbol = "♜"
     end
 
     def in_moveset?(x, y)
@@ -76,9 +72,9 @@ module Pieces
   end
 
   class Bishop < Piece
-    def symbol
-      return "♗" if @color == :white
-      return "♝" if @color == :black
+    def initialize(x, y, color)
+      super
+      @symbol = "♝"
     end
 
     def in_moveset?(x, y)
@@ -91,35 +87,27 @@ module Pieces
   end
 
   class Knight < Piece
-    def symbol
-      return "♘" if @color == :white
-      return "♞" if @color == :black
-    end
-
     def initialize(x, y, color)
       super
+      @symbol = "♞"
       @move_set = [[2, 1], [2, -1], [-2, 1], [-2, -1],
                    [1, 2], [-1, 2], [1, -2], [-1, -2]]
     end
   end
 
   class King < Piece
-    def symbol
-      return "♔" if @color == :white
-      return "♚" if @color == :black
-    end
-
     def initialize(x, y, color)
       super
+      @symbol = "♚"
       @move_set = [[1, 0], [-1, 0], [0, 1], [0, -1],
                    [1, 1], [1, -1], [-1, 1], [-1, -1]]
     end
   end
 
   class Queen < Piece
-    def symbol
-      return "♕" if @color == :white
-      return "♛" if @color == :black
+    def initialize(x, y, color)
+      super
+      @symbol = "♛"
     end
 
     # This just checks if we are moving in a straight line & if path is clear.
