@@ -14,6 +14,10 @@ module Pieces
       result
     end
 
+    def in_moveset?(x, y)
+      @move_set.include?([x - @x, y - @y]) ? true : false
+    end
+
     def move(x, y)
       if on_board?(x, y) && in_moveset?(x, y)
         @x = x
@@ -40,9 +44,5 @@ module Pieces
   class Knight < Piece
     @move_set = [[2, 1], [2, -1], [-2, 1], [-2, -1],
                  [1, 2], [-1, 2], [1, -2], [-1, -2]]
-
-    def in_moveset?(x, y)
-      @move_set.include?([x - @x, y - @y]) ? true : false
-    end
   end
 end
