@@ -1,7 +1,7 @@
 # Draws the board to the terminal
 module Draw
   def draw
-    @bg_color = :khaki
+    @bg_color = :dimgray
     print_letters
     print "\n"
     each do |item, x, y|
@@ -21,10 +21,10 @@ module Draw
   private
 
   def flip_color
-    if @bg_color == :khaki
-      @bg_color = :sienna
-    elsif @bg_color == :sienna
-      @bg_color = :khaki
+    if @bg_color == :dimgray
+      @bg_color = :black
+    elsif @bg_color == :black
+      @bg_color = :dimgray
     end
   end
 
@@ -39,7 +39,7 @@ module Draw
 
   def print_space(item)
     if item
-      color = item.color == :white ? :snow : :black
+      color = item.color == :white ? :snow : "000000"
       print Rainbow(" #{item.symbol}  ").color(color).bg(@bg_color)
     else
       print Rainbow("    ").bg(@bg_color)
