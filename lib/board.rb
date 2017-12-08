@@ -28,14 +28,14 @@ class Board
 
   def new_rank(y)
     color = y.zero? ? :black : :white
-    [Rook.new(0, y, color),
-     Knight.new(1, y, color),
-     Bishop.new(2, y, color),
-     King.new(3, y, color),
-     Queen.new(4, y, color),
-     Bishop.new(5, y, color),
-     Knight.new(6, y, color),
-     Rook.new(7, y, color)]
+    [Rook.new(0, y, color, @board),
+     Knight.new(1, y, color, @board),
+     Bishop.new(2, y, color, @board),
+     King.new(3, y, color, @board),
+     Queen.new(4, y, color, @board),
+     Bishop.new(5, y, color, @board),
+     Knight.new(6, y, color, @board),
+     Rook.new(7, y, color, @board)]
   end
 
   def create_board
