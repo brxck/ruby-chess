@@ -96,8 +96,11 @@ module Pieces
       "♞" if @color == :black
     end
 
-    @move_set = [[2, 1], [2, -1], [-2, 1], [-2, -1],
-                 [1, 2], [-1, 2], [1, -2], [-1, -2]]
+    def initialize(x, y, color)
+      super
+      @move_set = [[2, 1], [2, -1], [-2, 1], [-2, -1],
+                   [1, 2], [-1, 2], [1, -2], [-1, -2]]
+    end
   end
 
   class King < Piece
@@ -106,8 +109,11 @@ module Pieces
       "♚" if @color == :black
     end
 
-    @move_set = [[1, 0], [-1, 0], [0, 1], [0, -1],
-                 [1, 1], [1, -1], [-1, 1], [-1, -1]]
+    def initialize(x, y, color)
+      super
+      @move_set = [[1, 0], [-1, 0], [0, 1], [0, -1],
+                   [1, 1], [1, -1], [-1, 1], [-1, -1]]
+    end
   end
 
   class Queen < Piece
