@@ -59,6 +59,8 @@ class Board
     end
   end
 
+  private
+
   def flip_color
     if @bg_color == :khaki
       @bg_color = :sienna
