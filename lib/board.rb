@@ -52,7 +52,7 @@ class Board
       print_space(item)
       flip_color
       if x == 7
-        print " #{y}"
+        print " #{8 - y}"
         print "\n"
         flip_color
       end
