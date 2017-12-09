@@ -3,31 +3,32 @@ require "rainbow"
 
 # Manages user input and game-flow
 class Chess
-  attr_accessor :player
+  attr_accessor :player, :black, :white
 
   Player = Struct.new(:color, :check)
 
   def initialize
-    @board = Board.new
-    @white = Player(:white, false)
-    @black = Player(:black, false)
-    @player = @white
+    @board = Board.new(self)
+    @white = Player.new(:white, false)
+    @black = Player.new(:black, false)
+    @player = @black
   end
 
   def play
     loop do
       @board.draw
-      x1, y1 = prompt("\n Move piece at ")
-      x2, y2 = prompt("            to ")
-      result = @board.move(x1, y1, x2, y2, @player)
-      print_message(result, x2, y2)
-      next if result != true
       switch_player
+      turn
     end
   end
 
-  def check_turn(player)
-    while board.check
+  def turn
+    puts Rainbow("Your king is in check.\n").red if @player.check == true
+    x1, y1 = prompt("\n Move #{@player.color} piece at ")
+    x2, y2 = prompt("                  to ")
+    result = @board.move(x1, y1, x2, y2, @player)
+    print_message(result, x2, y2)
+    turn if result != true
   end
 
   def print_message(code, x2, y2)
@@ -38,6 +39,8 @@ class Chess
              Rainbow("You must move a #{@player.color} piece. Try again.").red
            when :invalid
              Rainbow("You can't move there. Try again.").red
+           when :check
+             Rainbow("You can't leave your king in check.").red
            when true
              Rainbow("#{@board.space(x2, y2).piece.capitalize} to " \
                      "#{xy_to_an(x2, y2)}.").green
@@ -46,8 +49,11 @@ class Chess
   end
 
   def switch_player
-    @player = @white if @turn == @black
-    @player = @black if @turn == @white
+    if @player == @white
+      @player = @black
+    elsif @player == @black
+      @player = @white
+    end
   end
 
   def xy_to_an(x, y)
@@ -71,7 +77,7 @@ class Chess
     loop do
       input = gets.chomp.downcase
       break if validate(input)
-      puts "Please try again. #{text}"
+      puts "Invalid input, try again.\n #{text}"
     end
     an_to_xy(input)
   end

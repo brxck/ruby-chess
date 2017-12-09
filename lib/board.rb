@@ -9,17 +9,29 @@ class Board
 
   attr_accessor :spaces, :pieces, :white_check, :black_check
 
-  def initialize
+  def initialize(game)
+    @game = game
     @pieces = []
-    @white_check = false
-    @black_check = false
     create_board
   end
 
   def check
+    list = []
+
     @pieces.each do |piece|
       next unless piece.check?
-      piece.color == :white ? @black_check = true : @white_check = true
+
+      if piece.color == :white
+        @game.black.check = true
+        list << :black
+      elsif piece.color == :black
+        @game.white.check = true
+        list << :white
+      end
+
+      @game.black.check = false unless list.include?(:black)
+      @game.white.check = false unless list.include?(:white)
+      return list
     end
     false
   end
@@ -31,8 +43,15 @@ class Board
     return :wrong_piece if piece.color != player.color
     return :invalid     unless piece.move(x2, y2)
 
+    temp = space(x2, y2)
     set_space(x2, y2, piece)
     set_space(x1, y1, nil)
+
+    if check != false && check.include?(player.color)
+      set_space(x1, y1, piece)
+      set_space(x2, y2, temp)
+      return :check
+    end
 
     true
   end
