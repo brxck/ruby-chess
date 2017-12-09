@@ -16,14 +16,17 @@ class Chess
 
   def play
     loop do
-      @board.draw
       switch_player
+      break if @board.mate(@player)
       turn
     end
+    switch_player
+    puts "Checkmate, #{@player.color} wins."
   end
 
   def turn
-    puts Rainbow("Your king is in check.\n").red if @player.check == true
+    @board.draw
+    puts Rainbow(" Your king is in check.\n").red if @player.check == true
     x1, y1 = prompt("\n Move #{@player.color} piece at ")
     x2, y2 = prompt("                  to ")
     result = @board.move(x1, y1, x2, y2, @player)

@@ -91,7 +91,16 @@ describe Board do
       blank.set_space(4, 3, Pieces::Rook.new(4, 3, :black, blank))
       expect(blank.check).to eq([:white])
       blank.move(3, 3, 3, 4, player)
-      expect(blank.check).to eq(false)
+      expect(blank.check).to eq([])
+    end
+  end
+
+  describe "#mate(color)" do 
+    it "returns true when the color is in checkmate" do
+      blank.set_space(0, 5, Pieces::King.new(0, 5, :white, blank))
+      blank.set_space(1, 5, Pieces::Queen.new(1, 5, :black, blank))
+      blank.set_space(2, 5, Pieces::King.new(2, 5, :black, blank))  
+      expect(blank.mate(player)).to eq(true)
     end
   end
 end

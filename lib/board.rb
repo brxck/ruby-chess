@@ -21,19 +21,38 @@ class Board
     @pieces.each do |piece|
       next unless piece.check?
 
-      if piece.color == :white
+      if piece.color == :white && !list.include?(:black)
         @game.black.check = true
         list << :black
-      elsif piece.color == :black
+      elsif piece.color == :black && !list.include?(:white)
         @game.white.check = true
         list << :white
       end
 
       @game.black.check = false unless list.include?(:black)
       @game.white.check = false unless list.include?(:white)
-      return list
     end
-    false
+    list
+  end
+
+  def mate(player)
+    @pieces.each do |piece|
+      next if piece.color != player.color
+      (0..7).each do |x|
+        (0..7).each do |y|
+          next unless piece.in_moveset?(x, y)
+          temp = space(x, y)
+          set_space(x, y, :temp)
+          if check.include?(player.color)
+            set_space(x, y, temp)
+            next
+          end
+          set_space(x, y, temp)
+          return false
+        end
+      end
+    end
+    true
   end
 
   def move(x1, y1, x2, y2, player)
@@ -47,7 +66,7 @@ class Board
     set_space(x2, y2, piece)
     set_space(x1, y1, nil)
 
-    if check != false && check.include?(player.color)
+    if check.include?(player.color)
       set_space(x1, y1, piece)
       set_space(x2, y2, temp)
       return :check
