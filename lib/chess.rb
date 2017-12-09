@@ -5,9 +5,13 @@ require "rainbow"
 class Chess
   attr_accessor :player
 
+  Player = Struct.new(:color, :check)
+
   def initialize
     @board = Board.new
-    @player = :white
+    @white = Player(:white, false)
+    @black = Player(:black, false)
+    @player = @white
   end
 
   def play
@@ -18,18 +22,20 @@ class Chess
       result = @board.move(x1, y1, x2, y2, @player)
       print_message(result, x2, y2)
       next if result != true
-      @player = @player == :white ? :black : :white
+      switch_player
     end
   end
 
-  # Just a case statement.
-  # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
+  def check_turn(player)
+    while board.check
+  end
+
   def print_message(code, x2, y2)
     text = case code
            when :no_piece
              Rainbow("There is no piece to move there. Try again.").red
            when :wrong_piece
-             Rainbow("You must move a #{@player} piece. Try again.").red
+             Rainbow("You must move a #{@player.color} piece. Try again.").red
            when :invalid
              Rainbow("You can't move there. Try again.").red
            when true
@@ -37,6 +43,11 @@ class Chess
                      "#{xy_to_an(x2, y2)}.").green
            end
     puts "\n\n " + text + "\n"
+  end
+
+  def switch_player
+    @player = @white if @turn == @black
+    @player = @black if @turn == @white
   end
 
   def xy_to_an(x, y)

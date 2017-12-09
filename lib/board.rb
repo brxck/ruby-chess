@@ -7,17 +7,28 @@ class Board
   include Pieces
   include Draw
 
-  attr_accessor :spaces
+  attr_accessor :spaces, :pieces, :white_check, :black_check
 
   def initialize
+    @pieces = []
+    @white_check = false
+    @black_check = false
     create_board
+  end
+
+  def check
+    @pieces.each do |piece|
+      next unless piece.check?
+      piece.color == :white ? @black_check = true : @white_check = true
+    end
+    false
   end
 
   def move(x1, y1, x2, y2, player)
     piece = space(x1, y1)
 
     return :no_piece    if piece.nil?
-    return :wrong_piece if piece.color != player
+    return :wrong_piece if piece.color != player.color
     return :invalid     unless piece.move(x2, y2)
 
     set_space(x2, y2, piece)

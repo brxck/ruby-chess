@@ -7,9 +7,12 @@ module Pieces
     def initialize(x, y, color, board)
       @x = x
       @y = y
+
       @color = color
       @piece = "#{color} #{self.class.name[8..-1].downcase}"
+
       @board = board
+      @board.pieces << self
     end
 
     def on_board?(x, y)
@@ -53,8 +56,14 @@ module Pieces
       end
     end
 
-    def king_in_check?
-      @move_set.each { |x, y| return true if @board.space(x, y).is_a?(King) }
+    def check?
+      (0..7).each do |x|
+        (0..7).each do |y|
+          return true if in_moveset?(x, y) && @board.space(x, y).is_a?(King) &&
+                         @board.space(x, y).color != @color
+        end
+      end
+      false
     end
 
     def inspect
@@ -93,7 +102,8 @@ module Pieces
 
     def move(x, y)
       if in_attackset?(x, y)
-        return false unless on_board?(x, y) && %i[white black].include?(takeable?(x, y))
+        return false unless on_board?(x, y) &&
+                            %i[white black].include?(takeable?(x, y))
       elsif in_moveset?(x, y)
         return false unless on_board?(x, y) && takeable?(x, y) == true
       else
