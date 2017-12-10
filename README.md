@@ -1,5 +1,9 @@
 # chess
 
+This is a solution for the The Odin Project: HTML/CSS.
+
+Two-player game of chess made in Ruby.
+
 ![screenshot](screenshot.png)
 
 ## Todo
