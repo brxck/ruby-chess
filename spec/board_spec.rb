@@ -95,11 +95,11 @@ describe Board do
     end
   end
 
-  describe "#mate(color)" do 
+  describe "#mate(color)" do
     it "returns true when the color is in checkmate" do
       blank.set_space(0, 5, Pieces::King.new(0, 5, :white, blank))
       blank.set_space(1, 5, Pieces::Queen.new(1, 5, :black, blank))
-      blank.set_space(2, 5, Pieces::King.new(2, 5, :black, blank))  
+      blank.set_space(2, 5, Pieces::King.new(2, 5, :black, blank))
       expect(blank.mate(player)).to eq(true)
     end
   end
